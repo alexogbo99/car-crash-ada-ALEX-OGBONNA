@@ -42,6 +42,7 @@ A simplified view of the repository layout:
 Project_ADA_Crash_Car_NYC_2025/
 │──config.py
 │──pipeline_utils.py
+│──requirements.txt
 ├── data/
 │   ├── raw/                     # Raw downloads (usually git-ignored)
 │   ├── intermediate/            # Intermediate artifacts
