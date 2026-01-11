@@ -90,7 +90,7 @@ The workflow is organized into sequential stages corresponding to the folders in
 * **Action:** Builds the active 500m grid and computes time-invariant features (network structure, infrastructure densities, baseline traffic exposure proxies).
 
 ### 3. Dynamic Panel Construction
-**Folder:** `scripts/dynamic_script/`
+**Folder:** `scripts/dynamic_scripts/`
 * Run scripts `01` through `04`.
 * **Action:** Creates the spatiotemporal panel (cell_id, date, time_bin), attaches history/weather features, and generates leakage-safe pseudo-forecasts.
 
