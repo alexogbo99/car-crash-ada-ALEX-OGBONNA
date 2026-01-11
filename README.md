@@ -74,33 +74,43 @@ pip install -r requirements.txt
 
 ```
 
-Usage / Pipeline
-The workflow is organized into sequential stages:
+## Usage / Pipeline
 
-Raw ingestion Download and standardize raw sources (crashes, traffic, weather, and spatial layers).
+The workflow is organized into sequential stages corresponding to the folders in `scripts/`.
+**Crucial:** Inside each folder, scripts are prefixed with numbers (e.g., `01_...`, `02_...`). Please run them in strictly numerical order.
 
-Static feature engineering Build the active 500m grid and compute time-invariant features (network structure, infrastructure densities, baseline traffic exposure proxies).
+### 1. Data Ingestion
+**Folder:** `scripts/raw_scripts/`
+* Run scripts `01` through `03`.
+* **Action:** Downloads raw data and standardizes formats for crashes, traffic, and weather.
 
-Dynamic panel construction + pseudo-forecasts Create the spatiotemporal panel (cell_id, date, time_bin) and attach history features, weather variables, and targets.
+### 2. Static Feature Engineering
+**Folder:** `scripts/static_scripts/`
+* Run scripts `01` through `08`.
+* **Action:** Builds the active 500m grid and computes time-invariant features (network structure, infrastructure densities, baseline traffic exposure proxies).
 
-Feature screening + tiering Run screening utilities to refine the final Tier 1 / Tier 2 / Tier 3 feature sets.
+### 3. Dynamic Panel Construction
+**Folder:** `scripts/dynamic_script/`
+* Run scripts `01` through `04`.
+* **Action:** Creates the spatiotemporal panel (cell_id, date, time_bin), attaches history/weather features, and generates leakage-safe pseudo-forecasts.
 
-Training experiments Train models comparing Direct vs Hurdle approaches across different feature tiers.
+### 4. Feature Screening & Tiering
+**Folder:** `scripts/features_scripts/`
+* Run all 6 scripts in order.
+* **Action:** Runs screening utilities to refine the Tier 1, Tier 2, and Tier 3 feature sets.
+* *Note:* Includes a specific sanity check script to ensure data integrity before training.
 
-Evaluation & diagnostics Produce the “championship ladder,” feature importance plots, and residual diagnostics.
+### 5. Training Experiments
+**Folder:** `scripts/run_experiment_scripts/`
+This folder contains separate pipelines for the C1 (Short Horizon) and C7 (Medium Horizon) targets.
+* **For C1:** Run the 10 scripts labeled for C1 (Gatekeepers → Train/Val → Testing).
+* **For C7:** Run the 10 scripts labeled for C7 (Gatekeepers → Train/Val → Testing).
+* **Action:** Trains and evaluates both Direct and Hurdle models across all feature tiers.
 
-Methodology (Brief)
-Targets
-C1 (short horizon): predict the next 6-hour-bin crash count.
-
-C7 (medium horizon): predict the cumulative crash count over the next 7 days.
-
-Feature tiers
-Tier 1 (Island): structural + calendar + location + history features
-
-Tier 2 (Weather): Tier 1 + weather context + leakage-safe pseudo-forecasts
-
-Tier 3 (Full): Tier 2 + traffic context + neighbor-based exposure/uncertainty features
+### 6. Evaluation & Visualization
+**Folder:** `scripts/visualisation_analysis_scripts/`
+* Run scripts `01` through `07`.
+* **Action:** Generates the "championship ladder," feature importance plots, and residual diagnostics found in the final report.
 
 Modeling strategies
 Direct regression: learn \hat{y} = f(\mathbf{x})
