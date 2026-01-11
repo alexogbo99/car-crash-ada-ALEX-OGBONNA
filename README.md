@@ -58,6 +58,19 @@ Project_ADA_Crash_Car_NYC_2025/
 
 ```
 
+## Installation & Requirements
+
+To reproduce the analysis, it is recommended to run this project in a standard Python 3 environment.
+
+**Dependencies:**
+The required Python libraries are listed in `requirements.txt`.
+You can install them using:
+
+```bash
+pip install -r requirements.txt
+
+```
+
 Usage / Pipeline
 The workflow is organized into sequential stages:
 
